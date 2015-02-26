@@ -1,0 +1,10 @@
+pppoe:
+  server:
+    users:
+      username1:
+        pass: password1
+  client:   
+    connection1:
+      interface: eth0
+      user: username1
+      pass: password1
