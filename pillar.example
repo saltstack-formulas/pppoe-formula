@@ -10,3 +10,4 @@ pppoe:
       interface: eth0
       user: username1
       pass: password1
+      maxfail: 0

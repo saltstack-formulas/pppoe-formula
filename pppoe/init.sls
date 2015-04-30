@@ -62,6 +62,7 @@ pppoe_client_config_{{ name }}:
         ##defaultroute
         hide-password
         noauth
+        maxfail {{ salt['pillar.get']('pppoe:maxfail', 0) }}        
 
 # Add credentials
 pppoe_credentials_file:
