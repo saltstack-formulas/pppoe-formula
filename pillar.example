@@ -1,4 +1,6 @@
 pppoe:
+  lcp_echo_interval: 30
+  lcp_echo_failure: 0
   server:
     users:
       username1:

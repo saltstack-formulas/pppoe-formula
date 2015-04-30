@@ -26,8 +26,8 @@ pppoe_server_config:
         mru 1492
         ktune
         proxyarp
-        lcp-echo-interval 30
-        lcp-echo-failure 4
+        lcp-echo-interval {{ salt['pillar.get']('pppoe:lcp_echo_interval', 30) }}
+        lcp-echo-failure {{ salt['pillar.get']('pppoe:lcp_echo_failure', 0) }}        
         nobsdcomp
         noccp
         novj
@@ -83,6 +83,6 @@ pppoe_options:
         lock
         modem
         proxyarp
-        lcp-echo-interval 30
-        lcp-echo-failure 4
+        lcp-echo-interval {{ salt['pillar.get']('pppoe:lcp_echo_interval', 30) }}
+        lcp-echo-failure {{ salt['pillar.get']('pppoe:lcp_echo_failure', 0) }}        
         debug dump
