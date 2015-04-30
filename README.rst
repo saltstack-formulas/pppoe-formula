@@ -98,4 +98,8 @@ Notes
     iface wan inet ppp
       provider myprovider
 
+* To get the connection details try this:
 
+.. code::
+
+    tdbdump /var/run/pppd2.tdb
