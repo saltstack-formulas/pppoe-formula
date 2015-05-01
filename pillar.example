@@ -20,3 +20,15 @@ pppoe:
       pass: password1
       maxfail: 0
       reconnect: {}     # uses default value 05:00
+  ipup:
+    'name': |
+      commands here
+  ipdown:
+    'name': |
+      commands here
+  ip6up:
+    'name': |
+      commands here
+  ip6down:
+    'name': |
+      commands here

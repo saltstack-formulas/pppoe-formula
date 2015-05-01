@@ -87,3 +87,42 @@ pppoe_options:
         lcp-echo-interval {{ salt['pillar.get']('pppoe:lcp_echo_interval', 30) }}
         lcp-echo-failure {{ salt['pillar.get']('pppoe:lcp_echo_failure', 0) }}        
         debug dump
+
+# Look for up/down scripts to install
+
+# ip-up.d
+{%- for name, content in salt['pillar.get']('pppoe:ipup', {}).iteritems() %}
+pppoe_ipup_{{ loop.index }}:
+  file.managed:
+    - name: /etc/ppp/ip-up.d/{{ name }}
+    - contents: |
+        {{ content|indent(8) }}
+{%- endfor %}
+
+# ip-down.d
+{%- for name, content in salt['pillar.get']('pppoe:ipdown', {}).iteritems() %}
+pppoe_ipup_{{ loop.index }}:
+  file.managed:
+    - name: /etc/ppp/ip-down.d/{{ name }}
+    - contents: |
+        {{ content|indent(8) }}
+{%- endfor %}
+
+# ipv6-up.d
+{%- for name, content in salt['pillar.get']('pppoe:ip6up', {}).iteritems() %}
+pppoe_ipup_{{ loop.index }}:
+  file.managed:
+    - name: /etc/ppp/ipv6-up.d/{{ name }}
+    - contents: |
+        {{ content|indent(8) }}
+{%- endfor %}
+
+# ipv6-down.d
+{%- for name, content in salt['pillar.get']('pppoe:ip6down', {}).iteritems() %}
+pppoe_ipup_{{ loop.index }}:
+  file.managed:
+    - name: /etc/ppp/ipv6-down.d/{{ name }}
+    - contents: |
+        {{ content|indent(8) }}
+{%- endfor %}
+
