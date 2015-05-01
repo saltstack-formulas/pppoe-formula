@@ -1,3 +1,6 @@
+include:
+  - pppoe
+
 {%- for name, data in salt['pillar.get']('pppoe:client').iteritems() %}
 
 {%-   if data.reconnect is defined %}
