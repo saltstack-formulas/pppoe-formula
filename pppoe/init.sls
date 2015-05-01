@@ -59,7 +59,7 @@ pppoe_client_config_{{ name }}:
         persist
         #demand
         #idle 180
-        ##defaultroute
+        defaultroute
         hide-password
         noauth
         maxfail {{ salt['pillar.get']('pppoe:maxfail', 0) }}        
