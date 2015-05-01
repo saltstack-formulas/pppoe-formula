@@ -20,6 +20,11 @@ Available states
 
 Installs and configures pppoe server and/or client
 
+``pppoe.reconnect``
+--------
+
+Installs a cronjob to reconnect at the given time or at 05:00 as default. See pppoe/pillar.example.
+
 Example
 =======
 
