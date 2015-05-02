@@ -95,6 +95,7 @@ pppoe_options:
 pppoe_ipup_{{ loop.index }}:
   file.managed:
     - name: /etc/ppp/ip-up.d/{{ name }}
+    - mode: 755
     - contents: |
         {{ content|indent(8) }}
 {%- endfor %}
@@ -104,6 +105,7 @@ pppoe_ipup_{{ loop.index }}:
 pppoe_ipup_{{ loop.index }}:
   file.managed:
     - name: /etc/ppp/ip-down.d/{{ name }}
+    - mode: 755
     - contents: |
         {{ content|indent(8) }}
 {%- endfor %}
@@ -113,6 +115,7 @@ pppoe_ipup_{{ loop.index }}:
 pppoe_ipup_{{ loop.index }}:
   file.managed:
     - name: /etc/ppp/ipv6-up.d/{{ name }}
+    - mode: 755
     - contents: |
         {{ content|indent(8) }}
 {%- endfor %}
@@ -122,6 +125,7 @@ pppoe_ipup_{{ loop.index }}:
 pppoe_ipup_{{ loop.index }}:
   file.managed:
     - name: /etc/ppp/ipv6-down.d/{{ name }}
+    - mode: 755
     - contents: |
         {{ content|indent(8) }}
 {%- endfor %}
