@@ -20,6 +20,11 @@ Available states
 
 Installs and configures pppoe server and/or client
 
+``pppoe.reconnect``
+--------
+
+Installs a cronjob to reconnect at the given time or at 05:00 as default. See pppoe/pillar.example.
+
 Example
 =======
 
@@ -55,11 +60,51 @@ Notes
 
     pppoe-server -I eth1
 
-* Clients must be started manually or via /etc/network/interfaces
+* Clients can be started manually or via /etc/network/interfaces (see https://wiki.debian.org/PPPoE).
 
 .. code::
 
-    auto eth1
-    iface eth1 inet manual
-      post-up pon connection1
-      pre-down poff connection1
+    auto eth0
+    iface eth0 inet manual
+
+    auto dsl-provider
+    iface dsl-provider inet ppp
+    pre-up    /sbin/ifconfig eth0 up
+    provider dsl-provider
+
+* More advanced network config using vlan:
+
+
+.. code::
+
+    auto eth2
+    
+    iface eth2 inet manual
+      pre-up /sbin/ifconfig eth2 up
+      post-down /sbin/ifconfig eth2 down
+      post-up /sbin/ifup vlan6
+      pre-down /sbin/ifdown vlan6
+    
+    # vlan6
+    # VDSL VLAN 6
+    #
+    
+    iface vlan6 inet manual
+      vlan-raw-device eth2
+      post-up /sbin/ifconfig vlan6 up
+      pre-down /sbin/ifconfig vlan6 down
+      post-up /sbin/ifup wan
+      pre-down /sbin/ifdown wan
+    
+    # wan
+    # PPPoe MyProvider
+    #
+    
+    iface wan inet ppp
+      provider myprovider
+
+* To get the connection details try this:
+
+.. code::
+
+    tdbdump /var/run/pppd2.tdb

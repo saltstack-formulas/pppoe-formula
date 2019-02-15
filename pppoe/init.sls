@@ -26,8 +26,8 @@ pppoe_server_config:
         mru 1492
         ktune
         proxyarp
-        lcp-echo-interval 30
-        lcp-echo-failure 4
+        lcp-echo-interval {{ salt['pillar.get']('pppoe:lcp_echo_interval', 30) }}
+        lcp-echo-failure {{ salt['pillar.get']('pppoe:lcp_echo_failure', 0) }}        
         nobsdcomp
         noccp
         novj
@@ -59,9 +59,10 @@ pppoe_client_config_{{ name }}:
         persist
         #demand
         #idle 180
-        ##defaultroute
+        defaultroute
         hide-password
         noauth
+        maxfail {{ salt['pillar.get']('pppoe:maxfail', 0) }}        
 
 # Add credentials
 pppoe_credentials_file:
@@ -83,6 +84,49 @@ pppoe_options:
         lock
         modem
         proxyarp
-        lcp-echo-interval 30
-        lcp-echo-failure 4
+        lcp-echo-interval {{ salt['pillar.get']('pppoe:lcp_echo_interval', 30) }}
+        lcp-echo-failure {{ salt['pillar.get']('pppoe:lcp_echo_failure', 0) }}        
         debug dump
+
+# Look for up/down scripts to install
+
+# ip-up.d
+{%- for name, content in salt['pillar.get']('pppoe:ipup', {}).iteritems() %}
+pppoe_ipup_{{ loop.index }}:
+  file.managed:
+    - name: /etc/ppp/ip-up.d/{{ name }}
+    - mode: 755
+    - contents: |
+        {{ content|indent(8) }}
+{%- endfor %}
+
+# ip-down.d
+{%- for name, content in salt['pillar.get']('pppoe:ipdown', {}).iteritems() %}
+pppoe_ipup_{{ loop.index }}:
+  file.managed:
+    - name: /etc/ppp/ip-down.d/{{ name }}
+    - mode: 755
+    - contents: |
+        {{ content|indent(8) }}
+{%- endfor %}
+
+# ipv6-up.d
+{%- for name, content in salt['pillar.get']('pppoe:ip6up', {}).iteritems() %}
+pppoe_ipup_{{ loop.index }}:
+  file.managed:
+    - name: /etc/ppp/ipv6-up.d/{{ name }}
+    - mode: 755
+    - contents: |
+        {{ content|indent(8) }}
+{%- endfor %}
+
+# ipv6-down.d
+{%- for name, content in salt['pillar.get']('pppoe:ip6down', {}).iteritems() %}
+pppoe_ipup_{{ loop.index }}:
+  file.managed:
+    - name: /etc/ppp/ipv6-down.d/{{ name }}
+    - mode: 755
+    - contents: |
+        {{ content|indent(8) }}
+{%- endfor %}
+

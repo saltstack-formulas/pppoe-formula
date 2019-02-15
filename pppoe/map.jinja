@@ -1,6 +1,6 @@
 {% set map = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['pppoe'],
+        'pkgs': ['pppoe', 'tdb-tools'],
         'conf_dir': '/etc/ppp',
         'cronjob_dir': '/etc/cron.d',
     },

@@ -1,4 +1,6 @@
 pppoe:
+  lcp_echo_interval: 30
+  lcp_echo_failure: 0
   server:
     users:
       username1:
@@ -8,3 +10,25 @@ pppoe:
       interface: eth0
       user: username1
       pass: password1
+      maxfail: 0
+      reconnect:
+        hour: 5
+        minute: 0
+    connection2:
+      interface: eth0
+      user: username1
+      pass: password1
+      maxfail: 0
+      reconnect: {}     # uses default value 05:00
+  ipup:
+    'name': |
+      commands here
+  ipdown:
+    'name': |
+      commands here
+  ip6up:
+    'name': |
+      commands here
+  ip6down:
+    'name': |
+      commands here
